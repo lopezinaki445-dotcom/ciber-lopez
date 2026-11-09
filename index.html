@@ -159,7 +159,7 @@
             gap: 10px;
         }
 
-        /* BARRA DE FILTROS Y ORDENAMIENTO (ESTILO E-COMMERCE) */
+        /* BARRA DE FILTROS Y ORDENAMIENTO */
         .controls-bar {
             background-color: var(--card-bg);
             padding: 15px;
@@ -243,11 +243,6 @@
             margin-bottom: 8px;
         }
 
-        .product-badge.empty-slot {
-            background-color: #64748b;
-            color: #fff;
-        }
-
         .product-img {
             width: 100%;
             height: 140px;
@@ -255,28 +250,6 @@
             border-radius: 6px;
             margin-bottom: 10px;
             background-color: #1e293b;
-        }
-
-        .placeholder-img {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 140px;
-            background-color: #1e293b;
-            border: 2px dashed #334155;
-            border-radius: 6px;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            font-size: 0.8rem;
-            text-align: center;
-            padding: 10px;
-        }
-
-        .placeholder-img i {
-            font-size: 2rem;
-            margin-bottom: 5px;
-            color: var(--primary);
         }
 
         .product-title {
@@ -319,7 +292,7 @@
             background-color: var(--primary-dark);
         }
 
-        /* SECCIÓN SOBRE NOSOTROS Y SERVICIOS */
+        /* SECCIÓN SERVICIOS E INFO */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -377,11 +350,11 @@
 
             <!-- Buscador en tiempo real -->
             <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Buscar lápices, impresiones, pegasolo, libretas..." onkeyup="filtrarYOrdenar()">
+                <input type="text" id="searchInput" placeholder="Buscar libretas, colores, cartulinas, impresiones..." onkeyup="filtrarYOrdenar()">
                 <button onclick="filtrarYOrdenar()"><i class="fas fa-search"></i></button>
             </div>
 
-            <a href="https://wa.me/5210000000000?text=Hola,%20me%20gustar%C3%ADa%20hacer%20una%20consulta" class="contact-btn" target="_blank">
+            <a href="https://wa.me/5210000000000?text=Hola,%20me%20gustar%C3%ADa%20hacer%20un%20pedido" class="contact-btn" target="_blank">
                 <i class="fab fa-whatsapp"></i> WhatsApp
             </a>
         </div>
@@ -402,20 +375,18 @@
 
     <div class="container">
 
-        <!-- TÍTULO Y CONTROLES DE FILTRADO/ORDEN -->
-        <h2 class="section-title" id="catalogo"><i class="fas fa-boxes"></i> Catálogo de Productos y Papelería</h2>
+        <!-- CONTROLES DE FILTRADO Y ORDENAMIENTO -->
+        <h2 class="section-title" id="catalogo"><i class="fas fa-boxes"></i> Catálogo Completo de Papelería y Productos</h2>
 
         <div class="controls-bar">
-            <!-- Categorías -->
             <div class="filter-group">
                 <span style="font-size: 0.9rem; color: var(--text-muted); font-weight: bold;">Categoría:</span>
                 <button class="filter-btn active" onclick="filtrarCategoria('todos', this)">Todos</button>
-                <button class="filter-btn" onclick="filtrarCategoria('papeleria', this)">Papelería</button>
-                <button class="filter-btn" onclick="filtrarCategoria('servicios', this)">Servicios / Impresiones</button>
-                <button class="filter-btn" onclick="filtrarCategoria('accesorios', this)">Accesorios</button>
+                <button class="filter-btn" onclick="filtrarCategoria('papeleria', this)">Papelería y Libretas</button>
+                <button class="filter-btn" onclick="filtrarCategoria('servicios', this)">Servicios e Impresiones</button>
+                <button class="filter-btn" onclick="filtrarCategoria('accesorios', this)">Arte y Accesorios</button>
             </div>
 
-            <!-- Selector de Ordenamiento -->
             <div class="filter-group">
                 <label for="sortSelect" style="font-size: 0.9rem; color: var(--text-muted); font-weight: bold;">Ordenar por:</label>
                 <select id="sortSelect" class="sort-select" onchange="filtrarYOrdenar()">
@@ -427,10 +398,8 @@
             </div>
         </div>
 
-        <!-- GRID DONDE SE IMPRIMEN LOS PRODUCTOS DINÁMICAMENTE CON JS -->
-        <div class="product-grid" id="productGrid">
-            <!-- Los productos se cargarán automáticamente desde JavaScript -->
-        </div>
+        <!-- GRID DE PRODUCTOS -->
+        <div class="product-grid" id="productGrid"></div>
 
         <!-- SERVICIOS DEL CIBER -->
         <h2 class="section-title" id="servicios"><i class="fas fa-laptop-code"></i> Servicios Informáticos</h2>
@@ -481,130 +450,104 @@
 
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <p>© 2026 Ciber López - Desarrollado para el proyecto académico de Administración para Informática (TESSFP).</p>
     </footer>
 
-    <!-- LÓGICA DE JAVASCRIPT CON PRODUCTOS Y FILTROS -->
+    <!-- SCRIPT CON EL NUEVO CATÁLOGO DE LAS FOTOGRAFÍAS -->
     <script>
-        // BASE DE DATOS DE PRODUCTOS (FÁCIL DE EDITAR O AGREGAR MÁS)
         const productos = [
-            {
-                id: 1,
-                nombre: "Lápiz Adhesivo / Pegasolo",
-                categoria: "papeleria",
-                precio: 15.00,
-                desc: "Lápiz adhesivo de 21g ideal para papel y cartón.",
-                badge: "Papelería",
-                imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80"
-            },
-            {
-                id: 2,
-                nombre: "Paquete de Hojas Blancas Carta",
-                categoria: "papeleria",
-                precio: 45.00,
-                desc: "Paquete con 100 hojas de papel bond de 75g.",
-                badge: "Papelería",
-                imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80"
-            },
-            {
-                id: 3,
-                nombre: "Lápiz del No. 2 HB",
-                categoria: "papeleria",
-                precio: 5.00,
-                desc: "Lápiz de grafito clásico con goma integrada.",
-                badge: "Papelería",
-                imagen: "https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?auto=format&fit=crop&w=300&q=80"
-            },
-            {
-                id: 4,
-                nombre: "Goma de Borrar de Migajón",
-                categoria: "papeleria",
-                precio: 8.00,
-                desc: "Goma suave que no maltrata ni mancha el papel.",
-                badge: "Papelería",
-                imagen: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=300&q=80"
-            },
-            {
-                id: 5,
-                nombre: "Cuaderno Profesional de Raya/Cuadro",
-                categoria: "papeleria",
-                precio: 35.00,
-                desc: "Cuaderno de espiral con 100 hojas de alta resistencia.",
-                badge: "Papelería",
-                imagen: "https://images.unsplash.com/photo-1585336261026-675768aa801f?auto=format&fit=crop&w=300&q=80"
-            },
-            {
-                id: 6,
-                nombre: "Bolígrafo Tinta Negra / Azul / Roja",
-                categoria: "papeleria",
-                precio: 7.00,
-                desc: "Pluma con punto mediano para escritura fluida.",
-                badge: "Papelería",
-                imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80"
-            },
-            {
-                id: 7,
-                nombre: "Impresión / Fotocopia B/N o Color",
-                categoria: "servicios",
-                precio: 2.00,
-                desc: "Impresión de alta calidad en tamaño Carta u Oficio.",
-                badge: "Servicio",
-                imagen: "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?auto=format&fit=crop&w=300&q=80"
-            },
-            {
-                id: 8,
-                nombre: "Renta de Computadora (1 Hora)",
-                categoria: "servicios",
-                precio: 15.00,
-                desc: "Acceso a internet de alta velocidad, Office y juegos.",
-                badge: "Servicio",
-                imagen: "https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=300&q=80"
-            },
-            {
-                id: 9,
-                nombre: "Memoria USB Kingston 32GB",
-                categoria: "accesorios",
-                precio: 120.00,
-                desc: "Unidad USB 3.0 rápida y compacta.",
-                badge: "Accesorios",
-                imagen: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=300&q=80"
-            },
+            // Listado de precios extraídos de tus imágenes
+            { id: 1, nombre: "Hoja Cebolla Tamaño Oficio", categoria: "papeleria", precio: 1.00, desc: "Pieza individual.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 2, nombre: "Enmicados", categoria: "servicios", precio: 25.00, desc: "Protección plástica para documentos.", badge: "Servicio", imagen: "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?auto=format&fit=crop&w=300&q=80" },
+            { id: 3, nombre: "Hojas para Carpetas", categoria: "papeleria", precio: 2.00, desc: "Precio por pieza ($60 el paquete).", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1585336261026-675768aa801f?auto=format&fit=crop&w=300&q=80" },
+            { id: 4, nombre: "Planisferios Chicos", categoria: "papeleria", precio: 1.00, desc: "Mapas escolares tamaño chico.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=300&q=80" },
+            { id: 5, nombre: "Mapas Grandes", categoria: "papeleria", precio: 3.00, desc: "Mapas de la República, mundiales, etc.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=300&q=80" },
+            { id: 6, nombre: "Láminas Educativas", categoria: "papeleria", precio: 6.00, desc: "Lámina escolar por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=300&q=80" },
+            { id: 7, nombre: "Engargolados (hasta 50 hojas)", categoria: "servicios", precio: 20.00, desc: "Incluye pasta y spirales metálico/plástico.", badge: "Servicio", imagen: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=300&q=80" },
+            { id: 8, nombre: "Pegasolo Delgado", categoria: "papeleria", precio: 20.00, desc: "Precio por metro.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 9, nombre: "Pegasolo Medio - Grueso", categoria: "papeleria", precio: 75.00, desc: "Precio por metro.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 10, nombre: "Pliego de Foami", categoria: "papeleria", precio: 24.00, desc: "Foami liso de colores.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 11, nombre: "Pliego de Foami Diamantado", categoria: "papeleria", precio: 20.00, desc: "Foami con acabado brillante.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 12, nombre: "Papel Opalina Delgado", categoria: "papeleria", precio: 3.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 13, nombre: "Papel Opalina Grueso", categoria: "papeleria", precio: 5.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 14, nombre: "Hojas T/O (Oficio)", categoria: "papeleria", precio: 2.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 15, nombre: "Hojas T/C (Carta)", categoria: "papeleria", precio: 1.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 16, nombre: "Hojas de Colores", categoria: "papeleria", precio: 2.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 17, nombre: "Hojas Doble Carta", categoria: "papeleria", precio: 6.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 18, nombre: "Hojas Blancas Paquete (100h)", categoria: "papeleria", precio: 45.00, desc: "Paquete con 100 hojas.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 19, nombre: "Etiquetas Impresas", categoria: "servicios", precio: 20.00, desc: "Por planilla o pieza.", badge: "Servicio", imagen: "https://images.unsplash.com/photo-1562654501-a0ccc0fc3fb1?auto=format&fit=crop&w=300&q=80" },
+            { id: 20, nombre: "Papel Fotográfico", categoria: "papeleria", precio: 16.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 21, nombre: "Hoja Vegetal Carta / Oficio", categoria: "papeleria", precio: 3.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 22, nombre: "Hoja Carta Responsiva", categoria: "papeleria", precio: 5.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 23, nombre: "Hoja Carta Poder", categoria: "papeleria", precio: 7.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 24, nombre: "Hoja Milimétrica", categoria: "papeleria", precio: 1.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 25, nombre: "Palos de Bandera Grueso", categoria: "papeleria", precio: 6.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 26, nombre: "Palos de Bandera Delgado", categoria: "papeleria", precio: 5.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            
+            // Segunda lista (Imagen 2)
+            { id: 27, nombre: "Papel Crepé", categoria: "papeleria", precio: 10.00, desc: "Rollo de papel crepé.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 28, nombre: "Rafia", categoria: "papeleria", precio: 30.00, desc: "Rollo / madeja.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 29, nombre: "Cascarón 1/4", categoria: "papeleria", precio: 15.00, desc: "Cartón cascarón tamaño 1/4.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 30, nombre: "Cascarón 1/8", categoria: "papeleria", precio: 10.00, desc: "Cartón cascarón tamaño 1/8.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 31, nombre: "Cascarón 1/2", categoria: "papeleria", precio: 35.00, desc: "Cartón cascarón tamaño 1/2.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 32, nombre: "Papel China", categoria: "papeleria", precio: 6.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 33, nombre: "Papel América", categoria: "papeleria", precio: 9.00, desc: "Precio por metro.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 34, nombre: "Cartulina Blanca", categoria: "papeleria", precio: 10.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 35, nombre: "Cartulina Negra", categoria: "papeleria", precio: 10.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 36, nombre: "Cartulina de Color", categoria: "papeleria", precio: 10.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 37, nombre: "Papel Bond", categoria: "papeleria", precio: 8.00, desc: "Por metro.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 38, nombre: "Libreta 200 Hojas", categoria: "papeleria", precio: 200.00, desc: "Libreta de gran capacidad.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1585336261026-675768aa801f?auto=format&fit=crop&w=300&q=80" },
+            { id: 39, nombre: "Libreta Profesional", categoria: "papeleria", prefijo: "", precio: 28.00, desc: "Libreta escolar estándar.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1585336261026-675768aa801f?auto=format&fit=crop&w=300&q=80" },
+            { id: 40, nombre: "Libreta Francesa", categoria: "papeleria", precio: 20.00, desc: "Libreta tamaño francesa.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1585336261026-675768aa801f?auto=format&fit=crop&w=300&q=80" },
+            { id: 41, nombre: "Libreta Italiana", categoria: "papeleria", precio: 20.00, desc: "Libreta tamaño italiana.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1585336261026-675768aa801f?auto=format&fit=crop&w=300&q=80" },
+            { id: 42, nombre: "Moños para Regalo", categoria: "papeleria", precio: 3.00, desc: "Moño decorativo.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 43, nombre: "Globos Negros / Dorados Grandes", categoria: "papeleria", precio: 5.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 44, nombre: "Listón", categoria: "papeleria", precio: 10.00, desc: "Precio por metro.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 45, nombre: "Listón Tricolor", categoria: "papeleria", precio: 15.00, desc: "Precio por metro.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 46, nombre: "Engrapadora", categoria: "accesorios", precio: 40.00, desc: "De escritorio mediana.", badge: "Accesorios", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 47, nombre: "Gafetes Transparentes", categoria: "papeleria", precio: 20.00, desc: "Portagafete con mica.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 48, nombre: "Gafetes con Diseño", categoria: "papeleria", precio: 35.00, desc: "Portagafete decorado.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 49, nombre: "Gafetes de Color", categoria: "papeleria", precio: 30.00, desc: "Portagafete de color sólido.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 50, nombre: "Lluvias Corta", categoria: "papeleria", precio: 7.00, desc: "Tiras decorativas metálicas cortas.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 51, nombre: "Lluvia Larga", categoria: "papeleria", precio: 12.00, desc: "Tiras decorativas metálicas largas.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 52, nombre: "Monografías", categoria: "papeleria", precio: 2.00, desc: "Monografía escolar.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=300&q=80" },
+            { id: 53, nombre: "Pistola de Silicon", categoria: "accesorios", precio: 60.00, desc: "Pistola aplicadora mediana.", badge: "Accesorios", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 54, nombre: "Globos Blancos", categoria: "papeleria", precio: 2.00, desc: "Por pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
 
-            // ESPACIOS VACÍOS / PLACEHOLDERS PARA RELLENAR MÁS ADELANTE
-            {
-                id: 10,
-                nombre: "Espacio Disponible (Nuevo Producto 1)",
-                categoria: "papeleria",
-                precio: 0.00,
-                desc: "Espacio preparado para añadir nuevo producto o foto real.",
-                badge: "Por Asignar",
-                imagen: null // Al ser null, mostrará una casilla punteada de marcador
-            },
-            {
-                id: 11,
-                nombre: "Espacio Disponible (Nuevo Producto 2)",
-                categoria: "accesorios",
-                precio: 0.00,
-                desc: "Espacio preparado para añadir nuevo producto o foto real.",
-                badge: "Por Asignar",
-                imagen: null
-            },
-            {
-                id: 12,
-                nombre: "Espacio Disponible (Nuevo Producto 3)",
-                categoria: "servicios",
-                precio: 0.00,
-                desc: "Espacio preparado para añadir un nuevo servicio del ciber.",
-                badge: "Por Asignar",
-                imagen: null
-            }
+            // Tercera lista (Imagen 3)
+            { id: 55, nombre: "Tarjetas Bibliográficas", categoria: "papeleria", precio: 1.00, desc: "Paquete / pieza.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 56, nombre: "Notas de Remisión", categoria: "papeleria", precio: 2.00, desc: "Libreta de notas contables.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1585336261026-675768aa801f?auto=format&fit=crop&w=300&q=80" },
+            { id: 57, nombre: "Sobres Chicos", categoria: "papeleria", precio: 1.00, desc: "Sobre de papel chico.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 58, nombre: "Sobres Grandes", categoria: "papeleria", precio: 3.00, desc: "Sobre de papel tamaño oficio/carta.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1586075010923-2dd4570fb338?auto=format&fit=crop&w=300&q=80" },
+            { id: 59, nombre: "Pintura Vinílica 70 ml (Vinci)", categoria: "papeleria", precio: 16.00, desc: "Bote de pintura vinílica.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 60, nombre: "Acuarelas", categoria: "papeleria", precio: 20.00, desc: "Estuche de pastillas de acuarela.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 61, nombre: "Colores Vividel", categoria: "papeleria", precio: 20.00, desc: "Caja de colores escolares.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 62, nombre: "Colores Norma de 24 pz + 4", categoria: "papeleria", precio: 90.00, desc: "Caja de colores de alta calidad.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 63, nombre: "Colores Norma de 24 pz", categoria: "papeleria", precio: 240.00, desc: "Caja de lápices de colores Norma.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 64, nombre: "Calculadora Sencilla", categoria: "accesorios", precio: 150.00, desc: "Calculadora de bolsillo básica.", badge: "Accesorios", imagen: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=300&q=80" },
+            { id: 65, nombre: "Calculadora Científica", categoria: "accesorios", precio: 50.00, desc: "Calculadora científica para matemáticas y física.", badge: "Accesorios", imagen: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=300&q=80" },
+            { id: 66, nombre: "Barra de Plastilina Chica", categoria: "papeleria", precio: 100.00, desc: "Caja chica de plastilina escolar.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 67, nombre: "Barra de Plastilina Grande", categoria: "papeleria", precio: 15.00, desc: "Barra individual grande.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 68, nombre: "Plastilina de Colores", categoria: "papeleria", precio: 18.00, desc:ines: "Set de barras variadas.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 69, nombre: "Colores Vividel Doble Color", categoria: "papeleria", precio: 17.00, desc: "Lápices bicolores.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 70, nombre: "Smarty Colors Punta Gruesa", categoria: "papeleria", precio: 110.00, desc: "Caja de colores punta gruesa.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 71, nombre: "Smarty Duo Colors", categoria: "papeleria", precio: 85.00, desc: "Lápices de doble color.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 72, nombre: "Bacoiris Triangular Grande", categoria: "papeleria", precio: 100.00, desc: "Colores ergonómicos triangulares.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 73, nombre: "Colores Mapita Grande", categoria: "papeleria", precio: 36.00, desc: "Caja de colores escolar Mapita.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 74, nombre: "Bacoiris Chicas", categoria: "papeleria", precio: 30.00, desc: "Caja de colores chica.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 75, nombre: "Colores Mapita Chico", categoria: "papeleria", precio: 20.00, desc: "Caja chica Mapita.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=300&q=80" },
+            { id: 76, nombre: "Corrector de Cinta 30m", categoria: "papeleria", precio: 18.00, desc: "Cinta correctora larga duración.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 77, nombre: "Corrector de Lápiz", categoria: "papeleria", precio: 18.00, desc: "Corrector en pluma.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 78, nombre: "Corrector Líquido", categoria: "papeleria", precio: 18.00, desc: "Corrector con pincel.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 79, nombre: "Silicon Líquido 30 ml", categoria: "papeleria", precio: 18.00, desc: "Pegamento líquido de silicón.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 80, nombre: "Silicon Líquido 60 ml", categoria: "papeleria", precio: 18.00, desc: "Frasco mediano.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 81, nombre: "Silicon Líquido 100 ml", categoria: "papeleria", precio: 15.00, desc: "Frasco grande.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" },
+            { id: 82, nombre: "Resistol Bully 55g", categoria: "papeleria", precio: 29.00, desc: "Pegamento blanco escolar.", badge: "Papelería", imagen: "https://images.unsplash.com/photo-1583485088034-697b5bc54ccd?auto=format&fit=crop&w=300&q=80" }
         ];
 
         let categoriaActual = 'todos';
 
-        // FUNCIÓN PARA RENDERIZAR PRODUCTOS
         function renderizarProductos(lista) {
             const grid = document.getElementById('productGrid');
             grid.innerHTML = '';
@@ -615,26 +558,19 @@
             }
 
             lista.forEach(p => {
-                const esEspacioVacio = p.imagen === null;
-                const imagenHTML = esEspacioVacio ? 
-                    `<div class="placeholder-img"><i class="fas fa-plus-circle"></i><span>Espacio reservado para foto</span></div>` : 
-                    `<img src="${p.imagen}" class="product-img" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/300x140?text=Ciber+Lopez'">`;
-
-                const badgeClass = esEspacioVacio ? 'product-badge empty-slot' : 'product-badge';
-                const textoPrecio = p.precio > 0 ? `$${p.precio.toFixed(2)} MXN` : 'Por definir';
-
+                const textoPrecio = `$${p.precio.toFixed(2)} MXN`;
                 const cardHTML = `
                     <div class="product-card">
                         <div>
-                            <span class="${badgeClass}">${p.badge}</span>
-                            ${imagenHTML}
+                            <span class="product-badge">${p.badge}</span>
+                            <img src="${p.imagen}" class="product-img" alt="${p.nombre}" onerror="this.src='https://via.placeholder.com/300x140?text=Ciber+Lopez'">
                             <div class="product-title">${p.nombre}</div>
                             <div class="product-desc">${p.desc}</div>
                         </div>
                         <div>
                             <div class="product-price">${textoPrecio}</div>
                             <button class="add-to-cart" onclick="encargarPorWhatsApp('${p.nombre}')">
-                                <i class="fab fa-whatsapp"></i> ${esEspacioVacio ? 'Consultar' : 'Encargar'}
+                                <i class="fab fa-whatsapp"></i> Encargar
                             </button>
                         </div>
                     </div>
@@ -643,7 +579,6 @@
             });
         }
 
-        // FILTRADO POR CATEGORÍA
         function filtrarCategoria(cat, btn) {
             categoriaActual = cat;
             document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
@@ -651,18 +586,15 @@
             filtrarYOrdenar();
         }
 
-        // LÓGICA DE BÚSQUEDA + FILTRADO + ORDENAMIENTO
         function filtrarYOrdenar() {
             const busqueda = document.getElementById('searchInput').value.toLowerCase().trim();
             const criterioOrden = document.getElementById('sortSelect').value;
 
-            // 1. Filtrar por categoría
             let resultado = productos.filter(p => {
                 if (categoriaActual === 'todos') return true;
                 return p.categoria === categoriaActual;
             });
 
-            // 2. Filtrar por término de búsqueda
             if (busqueda !== '') {
                 resultado = resultado.filter(p => 
                     p.nombre.toLowerCase().includes(busqueda) || 
@@ -670,7 +602,6 @@
                 );
             }
 
-            // 3. Ordenar resultados
             resultado.sort((a, b) => {
                 if (criterioOrden === 'nombre-az') {
                     return a.nombre.localeCompare(b.nombre);
@@ -686,13 +617,11 @@
             renderizarProductos(resultado);
         }
 
-        // ENVIAR SOLICITUD A WHATSAPP
         function encargarPorWhatsApp(nombreProducto) {
             const mensaje = encodeURIComponent(`Hola Ciber López, me interesa cotizar/encargar: ${nombreProducto}`);
             window.open(`https://wa.me/5210000000000?text=${mensaje}`, '_blank');
         }
 
-        // Cargar productos al iniciar la página
         window.onload = () => {
             filtrarYOrdenar();
         };
